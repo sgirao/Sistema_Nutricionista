@@ -1,0 +1,241 @@
+.patients-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.search-bar {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.search-bar input {
+  padding-left: 45px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+}
+
+.new-patient-btn {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: var(--radius);
+  transition: all 0.2s ease;
+}
+
+.new-patient-btn:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+.patients-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.patients-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 12px;
+  margin-top: -12px;
+}
+
+.patients-table th {
+  text-align: left;
+  padding: 12px 24px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.patient-row {
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.patient-row td {
+  padding: 20px 24px;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+}
+
+.patient-row td:first-child {
+  border-left: 1px solid transparent;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+}
+
+.patient-row td:last-child {
+  border-right: 1px solid transparent;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.patient-row:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.patient-row:hover td {
+  border-color: #e2e8f0;
+}
+
+.patient-name {
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 1.1rem;
+}
+
+.patient-info {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Form Styles */
+.form-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.tabs-header {
+  display: flex;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.tab-btn {
+  padding: 20px 32px;
+  background: none;
+  color: var(--text-muted);
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+}
+
+.tab-btn:hover {
+  color: var(--primary-color);
+}
+
+.tab-btn.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+  background-color: white;
+}
+
+.form-content {
+  padding: 40px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.form-section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.checkbox-item:hover {
+  background-color: #f8fafc;
+}
+
+.checkbox-item.active {
+  border-color: var(--primary-color);
+  background-color: #e8f5e9;
+}
+
+.checkbox-item input {
+  width: auto;
+}
+
+.input-suffix {
+  position: relative;
+}
+
+.input-suffix input {
+  padding-right: 45px;
+}
+
+.suffix-text {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.readonly-input {
+  background-color: #f1f5f9;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 24px 40px;
+  background-color: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.save-btn {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 14px 40px;
+  font-size: 1rem;
+}
+
+.cancel-btn {
+  background: none;
+  color: var(--text-muted);
+  padding: 14px 24px;
+}
+
+.cancel-btn:hover {
+  color: #ef4444;
+}
