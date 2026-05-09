@@ -7,6 +7,8 @@ import Dashboard from './pages/Dashboard';
 import PatientList from './pages/PatientList';
 import PatientForm from './pages/PatientForm';
 
+import PatientProfile from './pages/PatientProfile';
+
 function App() {
   return (
     <AuthProvider>
@@ -45,7 +47,7 @@ function App() {
             path="/paciente/:id"
             element={
               <ProtectedRoute>
-                <div>Perfil do Paciente (Em breve)</div>
+                <PatientProfile />
               </ProtectedRoute>
             }
           />
