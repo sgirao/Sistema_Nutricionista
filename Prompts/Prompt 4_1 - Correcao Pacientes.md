@@ -1,0 +1,1 @@
+No cadastro do paciente, está salvando automaticamente após clicar no botão Próxima Etapa da aba 2. Clinico. Corrija para que os dados do paciente sejam salvos somente após clicar no botão  Salvar Paciente da aba 3. Hábitos

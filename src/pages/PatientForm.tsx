@@ -176,14 +176,14 @@ const PatientForm: React.FC = () => {
             <Users size={20} /> Pacientes
           </a>
         </nav>
-        <button onClick={() => signOut()} className="logout-button">
+        <button type="button" onClick={() => signOut()} className="logout-button">
           <LogOut size={20} /> Sair
         </button>
       </aside>
 
       {/* Main Content */}
       <main className="main-content">
-        <button onClick={() => navigate('/pacientes')} className="nav-item" style={{ marginBottom: '24px', paddingLeft: 0 }}>
+        <button type="button" onClick={() => navigate('/pacientes')} className="nav-item" style={{ marginBottom: '24px', paddingLeft: 0 }}>
           <ArrowLeft size={20} /> Voltar para listagem
         </button>
 
@@ -195,18 +195,21 @@ const PatientForm: React.FC = () => {
         <div className="glass-card form-card">
           <div className="tabs-header">
             <button 
+              type="button"
               className={`tab-btn ${activeTab === 'pessoal' ? 'active' : ''}`}
               onClick={() => setActiveTab('pessoal')}
             >
               1. Pessoal
             </button>
             <button 
+              type="button"
               className={`tab-btn ${activeTab === 'clinico' ? 'active' : ''}`}
               onClick={() => setActiveTab('clinico')}
             >
               2. Clínico
             </button>
             <button 
+              type="button"
               className={`tab-btn ${activeTab === 'habitos' ? 'active' : ''}`}
               onClick={() => setActiveTab('habitos')}
             >
@@ -514,7 +517,10 @@ const PatientForm: React.FC = () => {
                 <button 
                   type="button" 
                   className="save-btn" 
-                  onClick={() => setActiveTab(activeTab === 'pessoal' ? 'clinico' : 'habitos')}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveTab(activeTab === 'pessoal' ? 'clinico' : 'habitos');
+                  }}
                   style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
                 >
                   Próxima etapa <ChevronRight size={18} />
