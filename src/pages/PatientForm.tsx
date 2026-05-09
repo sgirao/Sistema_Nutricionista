@@ -9,7 +9,6 @@ import {
   Activity, 
   Save,
   ChevronRight,
-  Info,
   Clock,
   Droplets,
   CheckCircle2,
