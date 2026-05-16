@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { X, Loader2, Sparkles, Save, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
-import { geminiService, PlanoAlimentarResponse } from '../services/geminiService';
+import { geminiService } from '../services/geminiService';
+import type { PlanoAlimentarResponse } from '../services/geminiService';
+
 import { supabase } from '../lib/supabaseClient';
 
 interface MealPlanModalProps {

@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["esnext", "dom"],
+
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "paths": {
+      "google-generative-ai": ["../../node_modules/@google/generative-ai"]
+    },
+    "types": ["deno"]
+  },
+
+  "include": ["./**/*.ts"]
+}

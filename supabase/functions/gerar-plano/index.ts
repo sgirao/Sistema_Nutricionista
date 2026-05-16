@@ -1,80 +1,64 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { GoogleGenerativeAI } from "https://esm.sh/@google/generative-ai@0.21.0";
+import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold, SchemaType } from "google-generative-ai";
+
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-serve(async (req) => {
-  // Handle CORS
+Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
 
   try {
-    const { dados_do_paciente } = await req.json();
+    const body = await req.json().catch(() => ({}));
+    const { dados_do_paciente } = body;
 
-    if (!dados_do_paciente) {
-      throw new Error("Dados do paciente não fornecidos.");
+    const apiKey = Deno.env.get("GOOGLE_API_KEY");
+    console.log("Verificando chave no servidor...", !!apiKey);
+    
+    if (!apiKey) {
+
+      return new Response(JSON.stringify({ error: "API Key não encontrada no servidor." }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      });
     }
 
-    const apiKey = Deno.env.get("GEMINI_API_KEY");
-    if (!apiKey) {
-      throw new Error("GEMINI_API_KEY não configurada no servidor.");
+    if (!dados_do_paciente) {
+      return new Response(JSON.stringify({ error: "Dados do paciente ausentes." }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      });
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-pro",
 
-    const prompt = `
-      Você é um nutricionista profissional.
-      Gere um plano alimentar semanal com base nos dados abaixo.
 
-      ⚠️ Regras:
-      - Responda APENAS em JSON válido
-      - Não use markdown
-      - Não escreva explicações
-      - Respeite restrições e alergias
 
-      Dados do paciente:
-      ${JSON.stringify(dados_do_paciente)}
+      safetySettings: [
+        { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+        { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
+        { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
+        { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+      ],
+    });
 
-      Formato obrigatório:
-      {
-        "plano_semanal": [
-          {
-            "dia": "Segunda-feira",
-            "refeicoes": {
-              "cafe_da_manha": ["", "", "", "", ""],
-              "lanche_manha": ["", "", "", "", ""],
-              "almoco": ["", "", "", "", ""],
-              "lanche_tarde": ["", "", "", "", ""],
-              "jantar": ["", "", "", "", ""]
-            }
-          }
-        ]
-      }
+    const prompt = `Gere um plano alimentar semanal em formato JSON para o paciente: ${JSON.stringify(dados_do_paciente)}. Use alimentos comuns no Brasil.`;
 
-      Regras Adicionais:
-      - gerar 7 dias
-      - 5 opções por refeição
-      - evitar repetição
-      - usar alimentos comuns no Brasil
-    `;
 
     const result = await model.generateContent(prompt);
-    const responseText = result.response.text();
-    
-    // Limpar markdown se a IA ignorar a regra
-    const cleanJson = responseText.replace(/```json|```/g, "").trim();
-    const jsonResponse = JSON.parse(cleanJson);
+    const text = result.response.text();
 
-    return new Response(JSON.stringify(jsonResponse), {
+    return new Response(text, {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
   } catch (error) {
+    console.error("ERRO:", error);
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 400,

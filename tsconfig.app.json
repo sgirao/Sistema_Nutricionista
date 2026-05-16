@@ -19,7 +19,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "google-generative-ai": ["./node_modules/@google/generative-ai"]
+    }
   },
-  "include": ["src"]
+  "include": ["src", "supabase"]
 }
+
