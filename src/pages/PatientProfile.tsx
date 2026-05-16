@@ -21,8 +21,10 @@ import {
   FileText,
   Clock,
   Droplets,
-  Scale
+  Scale,
+  Sparkles
 } from 'lucide-react';
+
 import { 
   LineChart, 
   Line, 
@@ -35,6 +37,8 @@ import {
 import '../styles/Dashboard.css';
 import '../styles/Patients.css';
 import '../styles/Profile.css';
+import MealPlanModal from '../components/MealPlanModal';
+
 
 type Tab = 'pessoal' | 'clinico' | 'habitos';
 
@@ -94,6 +98,8 @@ const PatientProfile: React.FC = () => {
   const [patient, setPatient] = useState<Patient | null>(null);
   const [consultations, setConsultations] = useState<Consultation[]>([]);
   const [mealPlans, setMealPlans] = useState<MealPlan[]>([]);
+  const [showMealPlanModal, setShowMealPlanModal] = useState(false);
+
 
   // New Consultation Form State
   const [newConsult, setNewConsult] = useState({
@@ -308,10 +314,16 @@ const PatientProfile: React.FC = () => {
           </div>
           
           <div style={{ display: 'flex', gap: '12px' }}>
-            <button type="button" className="save-btn" style={{ padding: '12px 24px' }}>
-              <FileText size={18} /> Gerar Plano Alimentar
+            <button 
+              type="button" 
+              className="save-btn" 
+              style={{ padding: '12px 24px', backgroundColor: '#9333ea' }}
+              onClick={() => setShowMealPlanModal(true)}
+            >
+              <Sparkles size={18} /> Gerar Plano Alimentar
             </button>
           </div>
+
         </header>
 
         <div className="profile-container">
@@ -700,8 +712,18 @@ const PatientProfile: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Modal de Plano Alimentar com IA */}
+      <MealPlanModal 
+        isOpen={showMealPlanModal}
+        onClose={() => setShowMealPlanModal(false)}
+        patientId={id || ''}
+        patientData={patient}
+        onSaveSuccess={fetchPatientData}
+      />
     </div>
   );
 };
+
 
 export default PatientProfile;
